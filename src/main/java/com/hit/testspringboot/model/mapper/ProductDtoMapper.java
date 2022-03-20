@@ -5,17 +5,15 @@ import com.hit.testspringboot.entity.Product;
 import com.hit.testspringboot.model.dto.ProductDto;
 
 public class ProductDtoMapper {
-    public static Product toCategory(ProductDto productDto, Category category) {
-        Product tmp = new Product();
-        tmp.setId(productDto.getId());
-        tmp.setCategory(category);
-        tmp.setName(productDto.getName());
-        tmp.setPrice(productDto.getPrice());
-        tmp.setImage(productDto.getImage());
-        tmp.setDescription(productDto.getDescription());
-        tmp.setEvaluate(productDto.getEvaluate());
-        tmp.setDiscount(productDto.getDiscount());
-        tmp.setSold(productDto.getSold());
-        return tmp;
+    public static Product toProduct(ProductDto productDto, Product product, Category category) {
+        product.setCategory(category);
+        product.setName(productDto.getName());
+        product.setPrice(productDto.getPrice());
+        product.setImage(productDto.getImage());
+        product.setDescription(productDto.getDescription());
+        product.setEvaluate(productDto.getEvaluate());
+        product.setDiscount(productDto.getDiscount());
+        product.setSold(productDto.getSold());
+        return product;
     }
 }

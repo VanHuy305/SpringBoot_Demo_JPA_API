@@ -4,11 +4,8 @@ import com.hit.testspringboot.model.dto.CategoryDto;
 import com.hit.testspringboot.service.CategoryService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
-import org.springframework.util.ReflectionUtils;
 import org.springframework.web.bind.annotation.*;
 
-import java.lang.reflect.Field;
-import java.util.List;
 import java.util.Map;
 
 @RestController
@@ -19,20 +16,17 @@ public class CategoryController {
 
     @GetMapping("")
     public ResponseEntity<?> getAllCategory() {
-        List<CategoryDto> categoryList = categoryService.getAllCategory();
-        return ResponseEntity.ok().body(categoryList);
+        return ResponseEntity.ok().body(categoryService.getAllCategory());
     }
 
     @GetMapping("/{id}")
     public ResponseEntity<?> getCategoryById(@PathVariable int id) {
-        CategoryDto category = categoryService.getCategoryById(id);
-        return ResponseEntity.ok().body(category);
+        return ResponseEntity.ok().body(categoryService.getCategoryById(id));
     }
 
     @GetMapping("/search")
     public ResponseEntity<?> searchCategory(@RequestParam(name = "keyword", required = false, defaultValue = "") String name) {
-        List<CategoryDto> category = categoryService.searchCategory(name);
-        return ResponseEntity.ok().body(category);
+        return ResponseEntity.ok().body(categoryService.searchCategory(name));
     }
 
     @PostMapping("")
@@ -42,14 +36,7 @@ public class CategoryController {
 
     @PatchMapping("/{id}")
     public ResponseEntity<?> updateCategory(@RequestBody Map<Object, Object> fields, @PathVariable int id) {
-        CategoryDto categoryDto = categoryService.getCategoryById(id);
-        fields.forEach((k, v) -> {
-            Field field = ReflectionUtils.findField(CategoryDto.class, (String) k);
-            assert field != null;
-            field.setAccessible(true);
-            ReflectionUtils.setField(field, categoryDto, v);
-        });
-        return ResponseEntity.ok().body(categoryService.updateCategory(categoryDto));
+        return ResponseEntity.ok().body(categoryService.updateCategory(fields, id));
     }
 
     @DeleteMapping("/{id}")
